@@ -24,11 +24,11 @@ const postUser = async (req , res , next)=>{
 const putUser = async (req , res , next)=>{
     // Gestion de errores
     try {
-        const { id , ...data} = req.body
+        const { id , ...data} = req.body                                        // Datos obtenidos en el body
         
-        await User.findByIdAndUpdate(id , data)
+        await User.findByIdAndUpdate(id , data)                                 // Buscar y actualizar con los datos
 
-        const search = await User.find()
+        const search = await User.find()                                        // Listar de nuevo todos los usuarios
         
         res.json(search)
 
