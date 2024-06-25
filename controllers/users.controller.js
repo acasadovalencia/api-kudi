@@ -6,13 +6,13 @@ const { User } = require('./../models/users.models')
 const postUser = async (req , res , next)=>{
     // Gestion de errores
      try {
-        const { username , password , favs } = req.body                        // Los datos se obtienen en el body al ser POST
+        const { username , password , favs } = req.body                        // Los datos se obtienen del body al ser POST
 
-        const newUser = new User({username , password , favs})                 // Crear nuevo usuario con los mismos parámetros que los existentes
+        const newUser = new User({ username , password , favs})                // Crear nuevo usuario con los mismos parámetros que los existentes
 
         await newUser.save()                                                   // Guardar el usuario en la bbdd.
 
-        const search = await User.find()
+        const search = await User.find()                                       // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios)
 
         res.json(search)
 
@@ -24,11 +24,11 @@ const postUser = async (req , res , next)=>{
 const putUser = async (req , res , next)=>{
     // Gestion de errores
     try {
-        const { id , ...data} = req.body                                        // Datos obtenidos en el body
+        const { id , ...data} = req.body                                        // Datos obtenidos del body (...data recoge el resto de datos del objeto)
         
-        await User.findByIdAndUpdate(id , data)                                 // Buscar y actualizar con los datos
+        await User.findByIdAndUpdate(id , data)                                 // Buscar con el id y actualizar con los nuevos datos del body
 
-        const search = await User.find()                                        // Listar de nuevo todos los usuarios
+        const search = await User.find()                                        // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios)
         
         res.json(search)
 
