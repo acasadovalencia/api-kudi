@@ -8,7 +8,7 @@ const router = express.Router()
     router.route('/login')
         .post(postLogin)
 
-    router.route('/user')
+    router.route('/signup')
         .post(postUser)
         .put(putUser)
     
