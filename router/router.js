@@ -1,7 +1,8 @@
 // Importaciones
 const express = require('express')
 const { postLogin} = require('../controllers/login.controller')
-const { postUser , putUser , deleteUser } = require('../controllers/users.controller') 
+const { postUser , putUser , deleteUser } = require('../controllers/users.controller')
+const { getMovies } = require('../controllers/movies.controller') 
 const router = express.Router()
 
 // Endpoints
@@ -14,6 +15,9 @@ const router = express.Router()
     
     router.route('/user/id/:id')
         .delete(deleteUser)
+
+    router.route('/movies')
+        .get(getMovies)
 
     // Middleware de gestion de errores
     router.all( '*' , (req , res , next)=>{                                   
