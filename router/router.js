@@ -2,7 +2,7 @@
 const express = require('express')
 const { postLogin} = require('../controllers/login.controller')
 const { postUser , putUser , deleteUser } = require('../controllers/users.controller')
-const { getMovies } = require('../controllers/movies.controller') 
+const { getMovies , getMovie } = require('../controllers/movies.controller') 
 const router = express.Router()
 
 // Endpoints
@@ -18,6 +18,10 @@ const router = express.Router()
 
     router.route('/movies')
         .get(getMovies)
+
+    router.route('/movies/:id')
+        .get(getMovie)
+
 
     // Middleware de gestion de errores
     router.all( '*' , (req , res , next)=>{                                   
