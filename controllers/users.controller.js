@@ -2,6 +2,19 @@
 const { User } = require('./../models/users.models') 
 
 // Funciones de los endpoints
+    // Obtener usuarios
+const getUsers = async (req , res , next)=>{
+    // Gestion de errores
+    try {                                            // Obtener el id por params (url)                      
+        const search = await User.find()                                       // Mostrar de nuevo los datos (se eliminará)
+
+        res.json(search)
+
+    } catch (err) {
+        next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
+    }
+}
+
     // Añadir usuario
 const postUser = async (req , res , next)=>{
     // Gestion de errores
@@ -60,6 +73,7 @@ const deleteUser = async (req , res , next)=>{
 
 // Exportaciones
 module.exports = {
+    getUsers,
     postUser,
     putUser,
     deleteUser

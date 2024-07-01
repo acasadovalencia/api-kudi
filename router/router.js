@@ -1,7 +1,7 @@
 // Importaciones
 const express = require('express')
 const { postLogin} = require('../controllers/login.controller')
-const { postUser , putUser , deleteUser } = require('../controllers/users.controller')
+const { getUsers , postUser , putUser , deleteUser } = require('../controllers/users.controller')
 const { getMovies , getMovie } = require('../controllers/movies.controller') 
 const router = express.Router()
 
@@ -11,6 +11,10 @@ const router = express.Router()
 
     router.route('/signup')
         .post(postUser)
+        .put(putUser)
+    
+    router.route('/users')
+        .get(getUsers)
         .put(putUser)
     
     router.route('/user/id/:id')
