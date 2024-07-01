@@ -6,14 +6,14 @@ const { User } = require('./../models/users.models')
 const postUser = async (req , res , next)=>{
     // Gestion de errores
      try {
-        const { username , password , profiles } = req.body                        // Los datos se obtienen del body al ser POST
+        const { username , password , favs } = req.body                        // Los datos se obtienen del body al ser POST
 
         const existingUser = await User.findOne({ username })
         if (existingUser) {
             return res.status(400).json({ error: 'El nombre de usuario ya existe' }) // Enviar un error si el usuario ya existe
         }
         
-        const newUser = new User({ username , password , profiles})                // Crear nuevo usuario con los mismos parámetros que los existentes
+        const newUser = new User({ username , password , favs})                // Crear nuevo usuario con los mismos parámetros que los existentes
 
         await newUser.save()                                                   // Guardar el usuario en la bbdd.
 
