@@ -5,11 +5,24 @@ const { User } = require('./../models/users.models')
     // Obtener usuarios
 const getUsers = async (req , res , next)=>{
     // Gestion de errores
-    try {                                            // Obtener el id por params (url)                      
+    try {                                                                      // Obtener el id por params (url)                      
         const search = await User.find()                                       // Mostrar de nuevo los datos (se eliminará)
 
         res.json(search)
 
+    } catch (err) {
+        next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
+    }
+}
+    // Obtener un usuario
+const getUser = async (req , res , next)=>{
+    // Gestion de errores
+    try {                                                              
+        const { id } = req.params                                              // Obtener el id por params (url)    
+        const search = await User.findById(id)                                 // Buscar en el array el usuario cuyo id sea el mismo que el introducido por params
+
+        res.json(search)
+    
     } catch (err) {
         next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
     }
@@ -19,18 +32,18 @@ const getUsers = async (req , res , next)=>{
 const postUser = async (req , res , next)=>{
     // Gestion de errores
      try {
-        const { username , password , favs } = req.body                        // Los datos se obtienen del body al ser POST
+        const { username , password , favs } = req.body                                 // Los datos se obtienen del body al ser POST
 
         const existingUser = await User.findOne({ username })
         if (existingUser) {
-            return res.status(400).json({ error: 'El nombre de usuario ya existe' }) // Enviar un error si el usuario ya existe
+            return res.status(400).json({ error: 'El nombre de usuario ya existe' })    // Enviar un error si el usuario ya existe
         }
         
-        const newUser = new User({ username , password , favs})                // Crear nuevo usuario con los mismos parámetros que los existentes
+        const newUser = new User({ username , password , favs})                         // Crear nuevo usuario con los mismos parámetros que los existentes
 
-        await newUser.save()                                                   // Guardar el usuario en la bbdd.
+        await newUser.save()                                                            // Guardar el usuario en la bbdd.
 
-        const search = await User.find()                                       // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios)
+        const search = await User.find()                                                // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios)
 
         res.json(search)
 
@@ -91,6 +104,7 @@ const deleteFavMovie = async (req , res , next)=>{
 // Exportaciones
 module.exports = {
     getUsers,
+    getUser,
     postUser,
     putUser,
     deleteUser,
