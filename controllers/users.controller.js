@@ -90,7 +90,24 @@ const deleteFavMovie = async (req , res , next)=>{
         const { userId , movieId } = req.params                               // Obtener los id necesarios para buscar y eliminar                                        
         await User.updateOne(                                                 // Metodo updateOne para actualizar solo el usuario con el id deseado. Se necesitan 2 objetos, el valor buscado y el lugar
             {_id: userId},                                                    // Busqueda de un usuario en la bbdd con el mismo id que el logueado
-            {$pull: { movies_favs: {_id: movieId} }}                          // Elimina todos los elementos de movies_favs cuyas id coincidan (entre el objeto de favs de la base de datos y el id de la pelicula)
+            {$pull: { tvshows_favs: {_id: movieId} }}                          // Elimina todos los elementos de movies_favs cuyas id coincidan (entre el objeto de favs de la base de datos y el id de la pelicula)
+        )                                       
+
+        const search = await User.find()                                       // Mostrar de nuevo los datos
+        res.json(search)
+
+    } catch (err) {
+        next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
+    }
+}
+
+const deleteFavTvshow = async (req , res , next)=>{
+    // Gestion de errores
+    try {
+        const { userId , tvshowId } = req.params                               // Obtener los id necesarios para buscar y eliminar                                        
+        await User.updateOne(                                                 // Metodo updateOne para actualizar solo el usuario con el id deseado. Se necesitan 2 objetos, el valor buscado y el lugar
+            {_id: userId},                                                    // Busqueda de un usuario en la bbdd con el mismo id que el logueado
+            {$pull: { tvshows_favs: {_id: tvshowId} }}                          // Elimina todos los elementos de movies_favs cuyas id coincidan (entre el objeto de favs de la base de datos y el id de la pelicula)
         )                                       
 
         const search = await User.find()                                       // Mostrar de nuevo los datos
@@ -108,5 +125,6 @@ module.exports = {
     postUser,
     putUser,
     deleteUser,
-    deleteFavMovie
+    deleteFavMovie,
+    deleteFavTvshow
 }

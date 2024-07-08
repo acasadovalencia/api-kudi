@@ -1,7 +1,7 @@
 // Importaciones
 const express = require('express')
 const { postLogin} = require('../controllers/login.controller')
-const { getUsers , getUser , postUser , putUser , deleteUser , deleteFavMovie } = require('../controllers/users.controller')
+const { getUsers , getUser , postUser , putUser , deleteUser , deleteFavMovie , deleteFavTvshow } = require('../controllers/users.controller')
 const { getMovies , getMovie } = require('../controllers/movies.controller') 
 const { getTvshows , getTvshow } = require('../controllers/tvshows.controller') 
 const router = express.Router()
@@ -20,6 +20,9 @@ const router = express.Router()
     
     router.route('/users/:userId/fav_movies/:movieId')
         .delete(deleteFavMovie)
+
+    router.route('/users/:userId/fav_tvshows/:movieId')
+        .delete(deleteFavTvshow)
     
     router.route('/user/id/:id')
         .get(getUser)
