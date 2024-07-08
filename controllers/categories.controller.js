@@ -8,7 +8,7 @@ const getCategories = async (req, res, next) => {
     try {
         const movies = await Movies.find();                             // Obtener todas las películas
         const tvshows = await Tvshows.find();                           // Obtener todas las series
-        let categories = new Set();                                     // Set para guardar valores sin repetir
+        let categories = new Set();                                     // Set para guardar valores sin repetir (MDN)
 
        
         movies.forEach(movie => {                                       // Por cada pelicula
