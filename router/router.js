@@ -3,43 +3,46 @@ const express = require('express')
 const { postLogin} = require('../controllers/login.controller')
 const { getUsers , getUser , postUser , putUser , deleteUser , deleteFavMovie , deleteFavTvshow } = require('../controllers/users.controller')
 const { getMovies , getMovie } = require('../controllers/movies.controller') 
-const { getTvshows , getTvshow } = require('../controllers/tvshows.controller') 
+const { getTvshows , getTvshow } = require('../controllers/tvshows.controller')
+const { getCategories } = require('../controllers/categories.controller')
 const router = express.Router()
 
 // Endpoints
-    router.route('/login')
+    router.route('/login')                                      // Para hacer Login a la APP
         .post(postLogin)
 
-    router.route('/signup')
+    router.route('/signup')                                     // Para crear usuarios en la APP
         .post(postUser)
         .put(putUser)
     
-    router.route('/users')
+    router.route('/users')                                      // Para obtener los usuarios y modificarlos
         .get(getUsers)
         .put(putUser)
     
-    router.route('/users/:userId/fav_movies/:movieId')
-        .delete(deleteFavMovie)
+    router.route('/users/:userId/fav_movies/:movieId')          // Para eliminar datos determinados de usuarios
+        .delete(deleteFavMovie) 
 
-    router.route('/users/:userId/fav_tvshows/:movieId')
+    router.route('/users/:userId/fav_tvshows/:tvshowId')        // Para eliminar datos determinados de usuarios
         .delete(deleteFavTvshow)
     
-    router.route('/user/id/:id')
+    router.route('/user/id/:id')                                // Para obtener el usuario por id y eliminarlo
         .get(getUser)
         .delete(deleteUser)
 
-    router.route('/movies')
+    router.route('/movies')                                     // Para obtener las películas
         .get(getMovies)
 
-    router.route('/movies/:id')
+    router.route('/movies/:id')                                 // Para obtener una película por id
         .get(getMovie)
 
-    router.route('/tvshows')
+    router.route('/tvshows')                                    // Para obtener las series
         .get(getTvshows)
     
-    router.route('/tvshows/:id')
+    router.route('/tvshows/:id')                                // Para obtener las series por id
         .get(getTvshow)
 
+    router.route('/categories')                                // Para obtener las series por id
+        .get(getCategories)
 
     // Middleware de gestion de errores
     router.all( '*' , (req , res , next)=>{                                   
