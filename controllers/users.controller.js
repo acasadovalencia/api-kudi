@@ -14,6 +14,7 @@ const getUsers = async (req , res , next)=>{
         next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
     }
 }
+
     // Obtener un usuario
 const getUser = async (req , res , next)=>{
     // Gestion de errores
@@ -34,30 +35,36 @@ const postUser = async (req , res , next)=>{
      try {
         const { username , password , favs } = req.body                                 // Los datos se obtienen del body al ser POST
 
-        const existingUser = await User.findOne({ username })
+        const existingUser = await User.findOne({ username })                           // Buscar un usuario en el array que tenga el mismo username que el pasado por el body
         if (existingUser) {
-            return res.status(400).json({ error: 'El nombre de usuario ya existe' })    // Enviar un error si el usuario ya existe
+            return res.status(400).json({ error: 'El nombre de usuario ya existe' })    // Enviar un error si encuentra una coincidencia
         }
         
         const newUser = new User({ username , password , favs})                         // Crear nuevo usuario con los mismos parámetros que los existentes
 
         await newUser.save()                                                            // Guardar el usuario en la bbdd.
 
-        const search = await User.find()                                                // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios)
+        const search = await User.find()                                                // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios en pantalla)
 
         res.json(search)
 
      } catch (err) {
-         next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
+         next( {statusText : err.message} )                                             // Enviar datos de error a través de next al último middleware de tratamiento de errores
      }
 }
+
     // Modificar usuario
 const putUser = async (req , res , next)=>{
     // Gestion de errores
     try {
-        const { id , ...data} = req.body                                        // Datos obtenidos del body (...data recoge el resto de datos del objeto)
+        const { id , username , ...data} = req.body                                         // Datos obtenidos del body (...data recoge el resto de datos del objeto)
+
+        const existingUser = await User.findOne({ username })                               // Buscar un usuario en el array que tenga el mismo username que el pasado por el body
+        if (existingUser) {
+            return res.status(400).json({ error: 'El nombre de usuario ya existe' })        // Enviar un error si encuentra una coincidencia
+        }
         
-        await User.findByIdAndUpdate(id , data)                                 // Buscar con el id y actualizar con los nuevos datos del body
+        await User.findByIdAndUpdate(id , {username , ...data})                                 // Buscar con el id y actualizar con los nuevos datos del body
 
         const search = await User.find()                                        // Listar de nuevo todos los usuarios (no se usará porque no se mostrarán todos los usuarios)
         
@@ -67,6 +74,7 @@ const putUser = async (req , res , next)=>{
         next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
     }
 }
+
     // Eliminar usuario
 const deleteUser = async (req , res , next)=>{
     // Gestion de errores
@@ -101,6 +109,7 @@ const deleteFavMovie = async (req , res , next)=>{
         next( {statusText : err.message} )                                     // Enviar datos de error a través de next al último middleware de tratamiento de errores
     }
 }
+
 // Elimimar la serie favorita del usuario
 const deleteFavTvshow = async (req , res , next)=>{
     // Gestion de errores
