@@ -2,8 +2,8 @@ console.clear()
 console.log( '🟡 JS init')
 
 // Importaciones
-const express = require('express')
 const cors = require('cors')
+const express = require('express')
 const mongoose = require('mongoose')
 const { router } = require('./router/router')
 
@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000
 const MONGO = process.env.MONGO || "mongodb://127.0.0.1:27017/kudi"
 
 // Conexión a MongoDB
-const connect = async ()=> mongoose.connect('mongodb://127.0.0.1:27017/kudi') // Conexión asíncrona obligatoria en MongoDB
+const connect = async ()=> mongoose.connect(MONGO) // Conexión asíncrona obligatoria en MongoDB
                         .then( ()=> console.log( '🟢 MongoDB connected' ) )
                         .catch( err => console.log( err.message ))
                         connect()
