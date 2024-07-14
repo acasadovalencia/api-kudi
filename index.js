@@ -7,8 +7,13 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const { router } = require('./router/router')
 
+// Variables de entorno
+
+const PORT = process.env.PORT || 3000
+const MONGO = process.env.MONGO || "mongodb://127.0.0.1:27017/kudi'"
+
 // Conexión a MongoDB
-const connect = async ()=> mongoose.connect('mongodb://127.0.0.1:27017/kudi') // Conexión asíncrona obligatoria en MongoDB
+const connect = async ()=> mongoose.connect(MONGO) // Conexión asíncrona obligatoria en MongoDB
                         .then( ()=> console.log( '🟢 MongoDB connected' ) )
                         .catch( err => console.log( err.message ))
                         connect()
@@ -22,4 +27,4 @@ const app = express() // Ejecutar express en app
     app.use(express.urlencoded( { extended: false } ))
     app.use( router )
 
-app.listen( 3000 , ()=> console.log( '🟠 API init') )
+app.listen( PORT , ()=> console.log( '🟠 API init') )
