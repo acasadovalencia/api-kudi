@@ -10,25 +10,19 @@ const { router } = require('./router/router')
 // Variables de entorno
 
 const PORT = process.env.PORT || 3000
-const MONGO = process.env.MONGO || "mongodb://127.0.0.1:27017/kudi'"
+const MONGO = process.env.MONGO || "mongodb://127.0.0.1:27017/kudi"
 
 // Conexión a MongoDB
-const connect = async ()=> mongoose.connect(MONGO) // Conexión asíncrona obligatoria en MongoDB
+const connect = async ()=> mongoose.connect("mongodb+srv://acasadovalenciadev:01oBbiXewnEqpXpf@cluster0.kps1gnb.mongodb.net/kudi") // Conexión asíncrona obligatoria en MongoDB
                         .then( ()=> console.log( '🟢 MongoDB connected' ) )
                         .catch( err => console.log( err.message ))
                         connect()
+    
 
-                       
 const app = express() // Ejecutar express en app
 
-const corsOptions = {
-    origin: 'https://app-kudi.vercel.app', 
-    optionsSuccessStatus: 200
-};
-
-
     // Middlewares
-    app.use(cors(corsOptions));
+    app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded( { extended: false } ))
     app.use( router )
