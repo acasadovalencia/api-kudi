@@ -17,12 +17,18 @@ const connect = async ()=> mongoose.connect(MONGO) // Conexión asíncrona oblig
                         .then( ()=> console.log( '🟢 MongoDB connected' ) )
                         .catch( err => console.log( err.message ))
                         connect()
-    
 
+                       
 const app = express() // Ejecutar express en app
 
+const corsOptions = {
+    origin: 'https://app-kudi.vercel.app', 
+    optionsSuccessStatus: 200
+};
+
+
     // Middlewares
-    app.use(cors())
+    app.use(cors(corsOptions));
     app.use(express.json())
     app.use(express.urlencoded( { extended: false } ))
     app.use( router )
