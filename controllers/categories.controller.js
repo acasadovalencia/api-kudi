@@ -3,7 +3,6 @@ const {Movies} = require('../models/movies.models')
 const {Tvshows} = require('../models/tvshows.models')
 
 
-
 const getCategories = async (req, res, next) => {
     try {
         const movies = await Movies.find();                             // Obtener todas las películas
