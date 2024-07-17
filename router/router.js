@@ -41,7 +41,7 @@ const router = express.Router()
     router.route('/tvshows/:id')                                // Para obtener las series por id
         .get(getTvshow)
 
-    router.route('/categories')                                // Para obtener las series por id
+    router.route('/categories')                                // Para obtener las categorias existentes
         .get(getCategories)
 
     // Middleware de gestion de errores
